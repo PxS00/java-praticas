@@ -25,7 +25,7 @@ public class ConnectionFactory {
     public static void fecharConexao(Connection con){
         try {
             con.close();
-            System.out.println("Conexão fechada");
+            System.out.println("\nConexão fechada");
         } catch (SQLException e) {
             System.out.println("Erro de SQL\n" + e.getMessage());
         }
