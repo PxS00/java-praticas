@@ -1,5 +1,6 @@
 package br.com.fiap.dao;
 
+import br.com.fiap.dto.Carro;
 import br.com.fiap.dto.Cliente;
 
 import java.sql.Connection;
@@ -60,7 +61,11 @@ public class ClienteDAO {
     }
 
     public ArrayList<Cliente> listarTodos(){
-        final String sql = "SELECT id_cliente, nome_cliente, placa FROM ddd_cliente ORDER BY id_cliente";
+        final String sql = "SELECT cli.id_cliente, cli.nome_cliente, cli.placa, " +
+                "car.descricao, car.cor " +
+                "FROM ddd_cliente cli " +
+                "LEFT JOIN ddd_carro car ON cli.placa = car.placa " +
+                "ORDER BY cli.id_cliente";
         ArrayList<Cliente> listaCliente = new ArrayList<>();
         try (PreparedStatement ps = getCon().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -71,6 +76,13 @@ public class ClienteDAO {
                     c.setIdCliente(rs.getInt(1));
                     c.setNomeCliente(rs.getString(2));
                     c.setPlaca(rs.getString(3));
+
+                    Carro carro = new Carro();
+                    carro.setPlaca(rs.getString("placa"));
+                    carro.setDescricao(rs.getString("descricao"));
+                    carro.setCor(rs.getString("cor"));
+
+                    c.setCarro(carro);
                     listaCliente.add(c);
                 }
                 return listaCliente;
