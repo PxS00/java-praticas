@@ -44,13 +44,16 @@ public class TesteClienteCRUD {
         System.out.println(dao.excluir(c4));
 
         ArrayList<Cliente> lista = dao.listarTodos();
-        for (Cliente c : lista) {
-            System.out.printf("ID=%d | Nome= %s | Placa= %s | Carro= %s%n",
-                    c.getIdCliente(),
-                    c.getNomeCliente(),
-                    c.getPlaca(),
-                    c.getCarro() != null ? c.getCarro().getDescricao() : "Sem carro");
+        if(lista != null){
+            for (Cliente c : lista) {
+                System.out.printf("ID=%d | Nome= %s | Placa= %s | Carro= %s%n",
+                        c.getIdCliente(),
+                        c.getNomeCliente(),
+                        c.getPlaca(),
+                        c.getCarro() != null ? c.getCarro().getDescricao() : "Sem carro");
+            }
         }
+
 
         ConnectionFactory.fecharConexao(con);
     }
