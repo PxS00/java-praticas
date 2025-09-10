@@ -6,13 +6,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CarroDAO {
-    private final Connection con;
+    private Connection con;
 
     public CarroDAO(Connection con){ this.con = con; }
     public Connection getCon() { return con; }
 
     public String inserir(Carro carro){
-        final String sql = "INSERT INTO ddd_carro (placa, cor, descricao) VALUES (?,?,?)";
+        String sql = "INSERT INTO ddd_carro (placa, cor, descricao) VALUES (?,?,?)";
         try (PreparedStatement ps = getCon().prepareStatement(sql);){
             ps.setString(1, carro.getPlaca());
             ps.setString(2, carro.getCor());

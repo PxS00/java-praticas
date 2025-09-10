@@ -10,12 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClienteDAO {
-    private final Connection con;
+    private Connection con;
     public ClienteDAO(Connection con){ this.con = con; }
     public Connection getCon() { return con; }
 
     public String inserir(Cliente cliente){
-        final String sql = "INSERT INTO ddd_cliente (id_cliente, nome_cliente, placa) VALUES (?,?,?)";
+        String sql = "INSERT INTO ddd_cliente (id_cliente, nome_cliente, placa) VALUES (?,?,?)";
         try (PreparedStatement ps = getCon().prepareStatement(sql)) {
             ps.setInt(1, cliente.getIdCliente());
             ps.setString(2, cliente.getNomeCliente());
@@ -31,7 +31,7 @@ public class ClienteDAO {
     }
 
     public String alterar(Cliente cliente){
-        final String sql = "UPDATE ddd_cliente SET nome_cliente = ?, placa = ? WHERE id_cliente = ?";
+        String sql = "UPDATE ddd_cliente SET nome_cliente = ?, placa = ? WHERE id_cliente = ?";
         try (PreparedStatement ps = getCon().prepareStatement(sql)) {
             ps.setString(1, cliente.getNomeCliente());
             ps.setString(2, cliente.getPlaca());
@@ -47,7 +47,7 @@ public class ClienteDAO {
     }
 
     public String excluir(Cliente cliente){
-        final String sql = "DELETE FROM ddd_cliente WHERE id_cliente = ?";
+        String sql = "DELETE FROM ddd_cliente WHERE id_cliente = ?";
         try (PreparedStatement ps = getCon().prepareStatement(sql)) {
             ps.setInt(1, cliente.getIdCliente());
             if (ps.executeUpdate() > 0){
@@ -61,7 +61,7 @@ public class ClienteDAO {
     }
 
     public ArrayList<Cliente> listarTodos(){
-        final String sql = "SELECT cli.id_cliente, cli.nome_cliente, cli.placa, " +
+        String sql = "SELECT cli.id_cliente, cli.nome_cliente, cli.placa, " +
                 "car.descricao, car.cor " +
                 "FROM ddd_cliente cli " +
                 "LEFT JOIN ddd_carro car ON cli.placa = car.placa " +
